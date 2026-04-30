@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
@@ -57,11 +57,13 @@
         devShells = {
           default =
             let
+              # `timm` is only referenced by a docstring in
+              # `pyscripts/vision_transformer.py`; skip it to avoid the lengthy
+              # timm test suite when entering the dev shell on nixos-unstable.
               python_with_pkgs = python3.withPackages (pp: [
                 packages.nahual
                 pp.torch
                 pp.torchvision
-                pp.timm
                 pp.tifffile
                 pp.scikit-image
                 pp.scikit-learn
