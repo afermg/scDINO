@@ -21,9 +21,7 @@ sys.path.insert(0, os.path.join(HERE, "pyscripts"))
 
 import vision_transformer as vits  # noqa: E402
 
-# CPU is plenty for a 1x3x224x224 smoke test on a randomly-initialised ViT-S/16
-# and avoids contending with whatever else is on the box's GPUs.
-device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 model = vits.vit_small(patch_size=16, num_classes=0, in_chans=3).to(device).eval()
 
