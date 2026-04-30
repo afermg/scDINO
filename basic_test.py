@@ -16,10 +16,13 @@ import numpy
 import torch
 
 # Make the local pyscripts package importable.
-HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "pyscripts"))
+try:
+    import pyscripts.vision_transformer as vits
+except:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, os.path.join(HERE, "pyscripts"))
 
-import vision_transformer as vits  # noqa: E402
+    import vision_transformer as vits  # noqa: E402
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
